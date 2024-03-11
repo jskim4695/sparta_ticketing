@@ -8,12 +8,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from './entities/user.entity';
 import { UpdateProfileDto } from './dto/updateProfile.dto';
+import { PointTransaction } from 'src/point/entities/point.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(PointTransaction)
+    private pointTransactionRepository: Repository<PointTransaction>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -26,13 +29,25 @@ export class UserService {
     }
 
     const hashedPassword = await hash(password, 10);
-    await this.userRepository.save({
+    const newUser = await this.userRepository.save({
       email,
       password: hashedPassword,
       name,
       phone,
       nickName
     });
+
+    const pointTransaction = this.pointTransactionRepository.create({
+      balance: 1000000, // 초기 포인트 100만
+      pointHistory: 1000000, // 변동된 포인트도 100만
+      changeDate: new Date(), // 현재 날짜/시간
+      changeReason: '회원가입 보너스', // 변동 사유
+      user: newUser, // 포인트 변동을 받는 사용자 지정
+    })
+
+    await this.pointTransactionRepository.save(pointTransaction)
+
+    return newUser
   }
 
   async login(email: string, password: string) {
@@ -52,6 +67,13 @@ export class UserService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async getUserProfile(userId: number) {
+    return await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['pointTransaction'],
+    });
   }
 
   async updateUserProfile(id: number, updateProfileDto: UpdateProfileDto) {

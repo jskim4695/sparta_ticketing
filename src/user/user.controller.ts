@@ -25,13 +25,17 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
-  getProfile(@UserInfo() user: User) {
+  async getProfile(@UserInfo() user: User) {
+    const userProfile = await this.userService.getUserProfile(user.id)
+    const point = userProfile.pointTransaction[userProfile.pointTransaction.length - 1];
+    
     return {
-      // TODO point와 nickname 반환하도록 수정해야함
       email: user.email, 
       name: user.name,
       phone: user.phone,
-      created_at: user.created_at
+      nickName: user.nickName,
+      created_at: user.created_at,
+      points: point.balance
     };
   }
 

@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 import { Role } from '../types/userRole.type';
+import { PointTransaction } from 'src/point/entities/point.entity';
 
 @Index('email', ['email'], { unique: true })
 @Entity({
@@ -36,4 +37,7 @@ export class User {
 
   @UpdateDateColumn({ type: 'timestamp', nullable: false })
   updated_at: Date;
+
+  @OneToMany(() => PointTransaction, (pointTransaction) => pointTransaction.user)
+  pointTransaction: PointTransaction[]
 }
