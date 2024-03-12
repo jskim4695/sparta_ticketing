@@ -30,11 +30,7 @@ export class UserController {
     const point = userProfile.pointTransaction[userProfile.pointTransaction.length - 1];
     
     return {
-      email: user.email, 
-      name: user.name,
-      phone: user.phone,
-      nickName: user.nickName,
-      created_at: user.created_at,
+      ...user,
       points: point.balance
     };
   }
