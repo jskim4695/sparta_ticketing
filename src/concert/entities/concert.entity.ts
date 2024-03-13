@@ -19,8 +19,8 @@ export class Concert {
   @Column({ type: 'varchar', nullable: false})
   concertDate: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  concertTime: string
+  @Column( 'simple-array', { nullable: false })
+  concertTime: string[]
 
   @Column({ type: 'varchar', nullable: true })
   concertImg: string

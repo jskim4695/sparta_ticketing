@@ -47,10 +47,11 @@ export class ConcertService {
 
   async findOne(id: number) {
     const concert = await this.verifyConcertById(id)
+    // 당일 예약은 불가하도록
     const currentDateTime = new Date()
-    const concertDateTime = new Date(`${concert.concertDate} ${concert.concertTime}`)
+    const concertDateTime = new Date(concert.concertDate)
 
-    concert.is_Available = concertDateTime >= currentDateTime
+    concert.is_Available = concertDateTime > currentDateTime
 
     return concert
   }
