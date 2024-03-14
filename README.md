@@ -1,3 +1,10 @@
+API정의서
+https://jolly-journey-887.notion.site/API-3e8136b1f5c3446ba20cc4063e8b22e6?pvs=4
+
+ERD
+https://www.erdcloud.com/d/f9W5mmmQRmerA7Bkk
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
