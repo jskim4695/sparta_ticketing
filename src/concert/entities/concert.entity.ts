@@ -1,6 +1,9 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 import {Category} from '../types/concertCategory.type'
+import {PerformPlace} from '../types/performPlace.type'
+import { Ticketing } from "src/ticketing/entities/ticketing.entity";
+import { Seat } from "src/seat/entities/seat.entity";
 
 @Entity({
   name: 'concert'
@@ -22,6 +25,9 @@ export class Concert {
   @Column( 'simple-array', { nullable: false })
   concertTime: string[]
 
+  @Column({ type: 'varchar', nullable: false})
+  place: PerformPlace
+
   @Column({ type: 'varchar', nullable: true })
   concertImg: string
 
@@ -36,4 +42,12 @@ export class Concert {
 
   @Column({ default: true })
   is_Available: boolean;
+
+
+  @OneToOne(() => Ticketing, ticketing => ticketing.concert)
+  @JoinColumn()
+  ticketing: Ticketing
+
+  @OneToMany(() => Seat, (seat) => seat.concert)
+  seat: Seat[]
 }

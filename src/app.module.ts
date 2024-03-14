@@ -14,6 +14,8 @@ import { TicketingModule } from './ticketing/ticketing.module';
 import { ConcertModule } from './concert/concert.module';
 import { PointModule } from './point/point.module';
 import { SeatModule } from './seat/seat.module';
+import { Seat } from './seat/entities/seat.entity';
+import { Ticketing } from './ticketing/entities/ticketing.entity';
 
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -26,7 +28,7 @@ const typeOrmModuleOptions = {
     host: configService.get('DB_HOST'),
     port: configService.get('DB_PORT'),
     database: configService.get('DB_NAME'),
-    entities: [User, PointTransaction, Concert],
+    entities: [User, PointTransaction, Concert, Seat, Ticketing],
     synchronize: configService.get('DB_SYNC'),
     logging: true,
   }),

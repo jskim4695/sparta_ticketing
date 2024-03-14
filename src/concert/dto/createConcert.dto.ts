@@ -1,5 +1,6 @@
 import { IsArray, IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Category } from "../types/concertCategory.type";
+import { PerformPlace } from "../types/performPlace.type";
 
 export class CreateConcertDto {
   @IsNotEmpty()
@@ -18,6 +19,10 @@ export class CreateConcertDto {
   @IsArray()
   @IsString({ each: true})
   concertTime: string[]
+
+  @IsNotEmpty()
+  @IsString()
+  place: PerformPlace
 
   @IsOptional()
   @IsString()

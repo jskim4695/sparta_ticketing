@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedCol
 
 import { Role } from '../types/userRole.type';
 import { PointTransaction } from 'src/point/entities/point.entity';
+import { Ticketing } from 'src/ticketing/entities/ticketing.entity';
 
 @Index('email', ['email'], { unique: true })
 @Entity({
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => PointTransaction, (pointTransaction) => pointTransaction.user)
   pointTransaction: PointTransaction[]
+
+  @OneToMany(() => Ticketing, (ticketing) => ticketing.user)
+  ticketing: Ticketing[]
 }

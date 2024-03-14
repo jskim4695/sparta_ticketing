@@ -17,8 +17,9 @@ export class ConcertService {
       intro: createConcertDto.intro,
       concertDate: createConcertDto.concertDate,
       concertTime: createConcertDto.concertTime,
+      place: createConcertDto.place,
+      concertImg: createConcertDto.concertImg,
       category: createConcertDto.category,
-      concertImg: createConcertDto.concertImg
     })
 
     const savedConcert = await this.concertRepository.save(newConcert)
@@ -47,7 +48,7 @@ export class ConcertService {
 
   async findOne(id: number) {
     const concert = await this.verifyConcertById(id)
-    // 당일 예약은 불가하도록
+    // 랜덤좌석 예약의 경우 당일에 좌석이 지정되므로, 당일 예약은 불가하도록
     const currentDateTime = new Date()
     const concertDateTime = new Date(concert.concertDate)
 

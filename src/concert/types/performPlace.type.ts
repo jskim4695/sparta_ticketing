@@ -1,0 +1,1 @@
+export type PerformPlace = "1관" | "2관" | "3관" | "4관"
