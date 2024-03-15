@@ -3,14 +3,15 @@ import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, Prim
 import {Category} from '../types/concertCategory.type'
 import {PerformPlace} from '../types/performPlace.type'
 import { Ticketing } from "src/ticketing/entities/ticketing.entity";
-import { Seat } from "src/seat/entities/seat.entity";
+import { Seat } from "src/concert/entities/seat.entity";
+import { Schedule } from "./schedule.entity";
 
 @Entity({
   name: 'concert'
 })
 
 export class Concert {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ unsigned: true })
   id: number
 
   @Column({ type: 'varchar', nullable: false })
@@ -24,6 +25,9 @@ export class Concert {
 
   @Column( 'simple-array', { nullable: false })
   concertTime: string[]
+
+  @Column ({ type: 'bigint', nullable: false, default: 30000})
+  price: number
 
   @Column({ type: 'varchar', nullable: false})
   place: PerformPlace
@@ -43,11 +47,6 @@ export class Concert {
   @Column({ default: true })
   is_Available: boolean;
 
-
-  @OneToOne(() => Ticketing, ticketing => ticketing.concert)
-  @JoinColumn()
-  ticketing: Ticketing
-
-  @OneToMany(() => Seat, (seat) => seat.concert)
-  seat: Seat[]
+  @OneToMany(() => Schedule, (schedule) => schedule.concert)
+  schedule: Schedule[]
 }

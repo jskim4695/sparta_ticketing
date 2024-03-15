@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { TicketingService } from './ticketing.service';
 import { CreateTicketingDto } from './dto/createTicketing.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -11,8 +11,14 @@ export class TicketingController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  async cerateTicketing(@UserInfo() user: User, @Body() createTicketingDto: CreateTicketingDto) {
-    return await this.ticketingService.createTicket(user.id, createTicketingDto)
+  async cerateTicketing(@UserInfo() user: User, @Body() scheduleId: CreateTicketingDto) {
+    const data = await this.ticketingService.createTicket(user.id, scheduleId)
+
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: '예매에 성공하였습니다.',
+      data,
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))

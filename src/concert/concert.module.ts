@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConcertController } from './concert.controller';
 import { ConcertService } from './concert.service';
 import { Concert } from './entities/concert.entity';
+import { Schedule } from './entities/schedule.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { Concert } from './entities/concert.entity';
       }),
       inject: [ConfigService],
       }),
-      TypeOrmModule.forFeature([Concert]),
+      TypeOrmModule.forFeature([Concert, Schedule]),
   ],
   providers: [ConcertService],
   controllers: [ConcertController]

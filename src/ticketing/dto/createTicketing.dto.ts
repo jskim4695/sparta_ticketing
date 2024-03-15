@@ -1,9 +1,11 @@
 import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
+import { pick } from 'lodash';
+import { Ticketing } from '../entities/ticketing.entity';
 
 export class CreateTicketingDto {
   @IsInt()
   @IsNotEmpty()
-  concertId: number;
+  scheduleId: number;
 
   @IsInt()
   @Min(1)

@@ -7,6 +7,7 @@ import { User } from './entities/user.entity';
 import { PointTransaction } from '../point/entities/point.entity'
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { Ticketing } from 'src/ticketing/entities/ticketing.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UserService } from './user.service';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Ticketing]),
     TypeOrmModule.forFeature([PointTransaction]),
   ],
   providers: [UserService],

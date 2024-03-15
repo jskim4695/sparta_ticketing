@@ -5,9 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Ticketing } from './entities/ticketing.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Concert } from 'src/concert/entities/concert.entity';
+import { Schedule } from 'src/concert/entities/schedule.entity';
+import { PointTransaction } from 'src/point/entities/point.entity';
+import { Seat } from 'src/concert/entities/seat.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Ticketing, User, Concert])],
+  imports: [TypeOrmModule.forFeature([Ticketing, User, Schedule, PointTransaction, Seat])],
   providers: [TicketingService],
   controllers: [TicketingController]
 })

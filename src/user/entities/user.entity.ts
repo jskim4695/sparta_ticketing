@@ -30,7 +30,7 @@ export class User {
   @Column({ type: 'varchar', nullable: false })
   nickName: string;
 
-  @Column({ type: 'varchar',length: 11, nullable: false })
+  @Column({ type: 'varchar', length: 11, nullable: false })
   phone: string;
 
   @CreateDateColumn({ type: 'timestamp', nullable: false })

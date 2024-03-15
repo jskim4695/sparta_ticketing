@@ -1,5 +1,6 @@
-import { IsOptional } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 import { Concert } from "src/concert/entities/concert.entity";
+import { Schedule } from "src/concert/entities/schedule.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -7,15 +8,20 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne
   name: 'ticketing'
 })
 
-export class Ticketing {
+export class Ticketing{
   @PrimaryGeneratedColumn()
   id: number
 
+  @Column()
+  userId: number
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Column({ unsigned: true })
+  scheduleId: number
+
   @Column({ type: 'int', nullable: false })
   ticketing_quantity: number
-
-  @Column({ type: "varchar", nullable: false })
-  selectedTime: string
 
   @CreateDateColumn({ nullable: false })
   created_at: Date
@@ -27,6 +33,6 @@ export class Ticketing {
   @ManyToOne(() => User, (user) => user.ticketing)
   user: User
 
-  @OneToOne(() => Concert, concert => concert.ticketing)
-  concert: Concert
+  @ManyToOne(() => Schedule, schedule => schedule.ticketing)
+  schedule: Schedule
 }
